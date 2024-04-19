@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Information</title>
+
+    <style>
+        /* Insert any css here */
+        .center{text-align: center;}
+        .txt{font-family: 'Times New Roman'; padding-left: 20%; padding-right: 20%;}
+        .animate-typing{font-family: 'Times New Roman'; font-size: x-large; color:red; text-align: center; margin-top: 50px;}
+        body{background-color: beige;}
+    </style>
+
+    <script src="https://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+    <link href="/static/jquery.animateTyping.js">
+</head>
+
+<body>
+    <div
+        class="animate-typing"
+        data-animate-loop="true"
+        data-type-speed="200"
+        data-type-delay="200"
+        data-remove-speed="50"
+        data-remove-delay="500"
+        data-cursor-speed="200">
+        Welcome to my page!
+    </div>
+    <script src="/static/jquery.animateTyping.js" type="text/javascript"></script>
+    <br>
+    <p class="txt">
+        The purpose of this webpage is to give the user the opportunity to learn more about some of the countries that they love. I'm very passionate about travelling and have always had the desire to travel the world, more specifically Asia as I have not stood foot in that region. The number 1 country on my bucketlist to visit is Japan, and I made this application with the intention of learning more about Japan as well as a wide variety of other countries. Currently, this application asks the user which country they want to learn more about, and after submitting an appropriate country name, the webpage will return the country's capital, region, population, and area in square kilometres.
+    </p>
+
+    <h1 class="txt">Country Information</h1>
+    <form method="POST" class="txt">
+        <label for="country_name">Enter Country Name:</label>
+        <input type="text" id="country_name" name="country_name" required>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <div class="txt">
+        {% if country_data %}
+            <h2>{{ country_data[0]['name']['common'] }}</h2>
+            <p>Capital: {{ country_data[0]['capital'][0] }}</p>
+            <p>Region: {{ country_data[0]['region'] }}</p>
+            <p>Population: {{ country_data[0]['population'] }}</p>
+            <p>Area: {{ country_data[0]['area'] }} square kilometers</p>
+        {% endif %}
+    </div>
+</body>
+</html>
