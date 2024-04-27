@@ -1,25 +1,46 @@
 from flask import Flask, render_template, request
-import requests
+from country import get_country_data
 
 app = Flask(__name__)
 
-# Function to fetch country data from restcountries.com API
-def get_country_data(country_name):
-    url = f"https://restcountries.com/v3/name/{country_name}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data
-    else:
-        return None
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def index():
     country_data = None
-    if request.method == 'POST':
-        country_name = request.form['country_name']
+    capital_enabled = None
+    region_enabled = None
+    population_enabled = None
+    area_enabled = None
+    land_enabled = None
+    if request.method == "POST":
+        country_name = request.form.get("country_name")
+        capital_enabled = request.form.get("capital")
+        region_enabled = request.form.get("region")
+        population_enabled = request.form.get("population")
+        area_enabled = request.form.get("area")
+        land_enabled = request.form.get("landlock")
+        print(population_enabled)
         country_data = get_country_data(country_name)
-    return render_template('index.html', country_data=country_data)
+        return render_template(
+            "index.html",
+            country_data=country_data,
+            capital=capital_enabled,
+            region=region_enabled,
+            population=population_enabled,
+            area=area_enabled,
+            landlock=land_enabled,
+        )
+    else:
+        return render_template(
+            "index.html",
+            country_data=country_data,
+            capital=capital_enabled,
+            region=region_enabled,
+            population=population_enabled,
+            area=area_enabled,
+            llock=land_enabled,
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app.run(debug=True)
